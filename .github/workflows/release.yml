@@ -106,6 +106,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      jobs:
+        build:
+          environment: build
+          runs-on: ubuntu-latest
       with:
         tag_name: ${{ github.ref }}
         name: Release ${{ github.ref }}
