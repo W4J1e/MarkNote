@@ -25,8 +25,13 @@ jobs:
       run: chmod +x client/app/gradlew
     - name: Decode Keystore
       run: |
-        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ${{ secrets.STORE_FILE }}
-      shell: bash  
+        mkdir -p $(dirname "${{ secrets.STORE_FILE }}")
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -di > "${{ secrets.STORE_FILE }}"
+        if [ ! -s "${{ secrets.STORE_FILE }}" ]; then
+          echo "Error: Failed to decode keystore file"
+          exit 1
+        fi
+      shell: bash
 
     - name: Build Release APK
       run: cd client/app && ./gradlew assembleRelease
