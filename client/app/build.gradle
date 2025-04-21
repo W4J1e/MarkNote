@@ -19,6 +19,27 @@ android {
                 FABRIC_APPKEY: "${fabricAppKey}",
         ]
     }
+    // 添加签名配置
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("_storeFile") ?: "debug.keystore")
+            storePassword System.getenv("_storePassword") ?: ""
+            keyAlias System.getenv("_keyAlias") ?: ""
+            keyPassword System.getenv("_keyPassword") ?: ""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release  // 关联签名配置
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
+    }
+
     signingConfigs {
         release {
             keyAlias "${_keyAlias}"
