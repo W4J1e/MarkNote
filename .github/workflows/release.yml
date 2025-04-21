@@ -2,9 +2,10 @@ name: Build and Release APK
 
 on:
   push:
+    branches:  # 监听特定分支（例如 main）
+      - master
     tags:
-      - 'v*' # Trigger on version tags
-
+      - 'v*'
 env:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
@@ -26,7 +27,7 @@ jobs:
       run: |
         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ${{ secrets.STORE_FILE }}
       shell: bash  
-        
+
     - name: Build Release APK
       run: ./gradlew assembleRelease
       env:
