@@ -2,16 +2,19 @@ name: Build and Release APK
 
 on:
   push:
-    branches:  # 监听特定分支（例如 main）
+    branches:
       - master
     tags:
       - 'v*'
+
 env:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 jobs:
   build:
+    environment: build  # 添加environment配置
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v4
     
@@ -21,8 +24,20 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
     
+    - name: Verify Java Version
+      run: java -version
+    
+    - name: Cache Gradle
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('client/app/gradle/wrapper/gradle-wrapper.properties') }}
+    
     - name: Grant execute permission for gradlew
       run: chmod +x client/app/gradlew
+    
     - name: Verify Secrets
       run: |
         if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
@@ -63,10 +78,10 @@ jobs:
     - name: Build Release APK
       run: cd client/app && ./gradlew assembleRelease
       env:
-        _storeFile: ${{ secrets.STORE_FILE }}
-        _storePassword: ${{ secrets.STORE_PASSWORD }}
-        _keyAlias: ${{ secrets.KEY_ALIAS }}
-        _keyPassword: ${{ secrets.KEY_PASSWORD }}
+        STORE_FILE: ${{ secrets.STORE_FILE }}
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
     
     - name: Build Debug APK
       run: cd client/app && ./gradlew assembleDebug
@@ -82,6 +97,13 @@ jobs:
       with:
         name: app-debug
         path: client/app/build/outputs/apk/debug/*.apk
+    
+    - name: Clean up keystore
+      if: always()
+      run: |
+        if [ -f "${{ secrets.STORE_FILE }}" ]; then
+          rm -f "${{ secrets.STORE_FILE }}"
+        fi
     
   release:
     needs: build
@@ -106,10 +128,6 @@ jobs:
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      jobs:
-        build:
-          environment: build
-          runs-on: ubuntu-latest
       with:
         tag_name: ${{ github.ref }}
         name: Release ${{ github.ref }}
