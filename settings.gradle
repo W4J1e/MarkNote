@@ -1,2 +1,11 @@
-include ':app', ':commons', ':data', ':pinlockview', ':fingerprint'
+// 根目录/settings.gradle
+include ':client:app'          // client 下的 app 模块
+include ':client:commons'      // client 下的 commons 模块（如果存在）
+include ':commons', ':data', ':pinlockview', ':fingerprint'  // 其他独立模块
+
+// 设置 client 项目的路径（假设 client 是根目录的子目录）
+project(':client').projectDir = new File(settingsDir, 'client')
+
+// 其他模块路径设置（根据实际位置调整）
 project(':commons').projectDir = new File(settingsDir, 'commons')
+project(':data').projectDir = new File(settingsDir, 'data')

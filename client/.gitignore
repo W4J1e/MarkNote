@@ -52,9 +52,6 @@ freeline.py
 freeline/
 freeline_project_description.json
 
-# the gradle properties
-./gradle.properties
-
 # Gradle and build files
 .gradle/
 build/

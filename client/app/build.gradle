@@ -1,118 +1,77 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-    dependencies {
-        // 其他 buildscript 依赖项
-    }
-}
-
-// 应用插件
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
 
+ext.kotlin_version = '1.9.22'
+
 android {
     namespace 'me.shouheng.notepal.app'
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "me.shouheng.notepal"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode 13
         versionName "2.3"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // place holder
         manifestPlaceholders = [
-                UMENG_CHANNEL_VALUE: "umeng",
-                UMENG_APPKEY: "${umengAppKey}",
-                FABRIC_APPKEY: "${fabricAppKey}",
+            UMENG_CHANNEL_VALUE: "umeng",
+            UMENG_APPKEY: "${umengAppKey}",
+            FABRIC_APPKEY: "${fabricAppKey}",
         ]
     }
-    // 添加签名配置
+
     signingConfigs {
         release {
-            storeFile file(System.getenv("_storeFile") ?: "debug.keystore")
-            storePassword System.getenv("_storePassword") ?: ""
-            keyAlias System.getenv("_keyAlias") ?: ""
-            keyPassword System.getenv("_keyPassword") ?: ""
+            keyAlias System.getenv("_keyAlias") ?: "${_keyAlias}"
+            storeFile file(System.getenv("_storeFile") ?: "${_storeFile}")
+            storePassword System.getenv("_storePassword") ?: "${_storePassword}"
+            keyPassword System.getenv("_keyPassword") ?: "${_keyPassword}"
         }
     }
 
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release  // 关联签名配置
+            signingConfig signingConfigs.release
         }
         debug {
             applicationIdSuffix ".debug"
         }
     }
 
-    signingConfigs {
-        release {
-            keyAlias "${_keyAlias}"
-            storeFile file("${_storeFile}")
-            storePassword "${_storePassword}"
-            keyPassword "${_keyPassword}"
-        }
-    }
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true // enable shrink resources
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        applicationVariants.all { variant ->
-            variant.outputs.all { output ->
-                outputFileName = defaultConfig.applicationId + "-" + variant.baseName + "-" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk"
-            }
-        }
-    }
-    dataBinding {
-        enabled = true
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions {
-            jvmTarget = '17'
-            freeCompilerArgs = ["-Xjvm-default=all"]
-        }
+
+    kotlinOptions {
+        jvmTarget = '17'
+        freeCompilerArgs = ["-Xjvm-default=all"]
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
+
+    buildFeatures {
+        viewBinding true  // 替代 DataBinding（按需选择）
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
+
     flavorDimensions "default"
     productFlavors {
-        dev {
-            dimension "default"
-        }
-        alpha {
-            dimension "default"
-        }
-        beta {
-            dimension "default"
-        }
-        prod {
-            dimension "default"
-        }
+        dev { dimension "default" }
+        alpha { dimension "default" }
+        beta { dimension "default" }
+        prod { dimension "default" }
     }
+
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
@@ -128,11 +87,4 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':pinlockview')
     implementation project(path: ':fingerprint')
-}
-
-// 添加 wrapper 任务
-task wrapper(type: Wrapper) {
-    gradleVersion = '8.6'
-    distributionUrl = "https://services.gradle.org/distributions/gradle-8.6-bin.zip"
-    validateDistributionUrl = true // 添加这一行
 }
