@@ -27,6 +27,9 @@ jobs:
     - name: Verify Java Version
       run: java -version
     
+    - name: Grant execute permission for gradlew
+      run: cd client/app && chmod +x gradlew
+    
     - name: Verify Gradle Version
       run: cd client/app && ./gradlew --version
     
@@ -40,9 +43,6 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('client/app/gradle/wrapper/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
-    
-    - name: Grant execute permission for gradlew
-      run: chmod +x client/app/gradlew
     
     - name: Verify Secrets
       run: |
