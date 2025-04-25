@@ -41,9 +41,6 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    kapt {
-        generateStubs = true
-    }
 }
 
 dependencies {

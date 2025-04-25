@@ -19,7 +19,6 @@ plugins {
 android {
     namespace 'me.shouheng.notepal.pinlockview' // 添加这一行指定命名空间
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.3'
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
