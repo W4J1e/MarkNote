@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    environment: build  # 添加environment配置
+    environment: build
     runs-on: ubuntu-latest
     
     steps:

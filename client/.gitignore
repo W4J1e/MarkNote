@@ -12,8 +12,6 @@
 bin/
 gen/
 out/
-*.jar
-!gradle/wrapper/gradle-wrapper.jar
 .idea
 
 # Local configuration file (sdk path, etc)
