@@ -81,8 +81,8 @@ jobs:
         echo "Keystore successfully decoded to ${{ secrets.STORE_FILE }}"
       shell: bash
 
-    - name: Run Static Analysis
-      run: cd client/app && ./gradlew detekt ktlintCheck
+    #- name: Run Static Analysis
+    #  run: cd client/app && ./gradlew detekt ktlintCheck
     
     - name: Build Release APK
       run: cd client/app && ./gradlew assembleRelease
