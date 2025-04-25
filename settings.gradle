@@ -1,0 +1,2 @@
+include ':app', ':commons', ':data', ':pinlockview', ':fingerprint'
+project(':commons').projectDir = new File(settingsDir, 'commons')

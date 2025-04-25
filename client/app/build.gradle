@@ -1,9 +1,23 @@
-apply plugin: 'com.android.application'
-apply plugin: 'AndResGuard'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        // 其他 buildscript 依赖项
+    }
+}
+
+// 应用插件
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
+    namespace 'me.shouheng.notepal.app'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "me.shouheng.notepal"
@@ -58,7 +72,7 @@ android {
         }
         applicationVariants.all { variant ->
             variant.outputs.all { output ->
-                outputFileName = defaultConfig.applicationId + "-" + variant.baseName + "-" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk";
+                outputFileName = defaultConfig.applicationId + "-" + variant.baseName + "-" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk"
             }
         }
     }
@@ -102,36 +116,6 @@ android {
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
-    // AndResGuard
-    andResGuard {
-        mappingFile = null
-        // Do NOT enable 7zip compression(use7zip) when you distribute your APP on Google Play: https://github.com/shwenzhang/AndResGuard/issues/233
-        use7zip = true
-        useSign = true
-        keepRoot = false
-
-        whiteList = [
-                // for fabric
-                "R.string.com.crashlytics.*",
-                // for google-services
-                "R.string.google_app_id",
-                "R.string.gcm_defaultSenderId",
-                "R.string.default_web_client_id",
-                "R.string.ga_trackingId",
-                "R.string.firebase_database_url",
-                "R.string.google_api_key",
-                "R.string.google_crash_reporting_api_key"
-        ]
-        compressFilePattern = [
-                "*.png",
-                "*.jpg",
-                "*.jpeg",
-                "*.gif",
-        ]
-        sevenzip {
-            artifact = 'com.tencent.mm:SevenZip:1.2.13'
-        }
-    }
 }
 
 dependencies {
@@ -140,11 +124,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     
-    // Static analysis tools
-    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1"
-    
     implementation project(path: ':commons')
     implementation project(path: ':data')
     implementation project(path: ':pinlockview')
     implementation project(path: ':fingerprint')
+}
+
+// 添加 wrapper 任务
+task wrapper(type: Wrapper) {
+    gradleVersion = '8.6'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-8.6-bin.zip"
+    validateDistributionUrl = true // 添加这一行
 }

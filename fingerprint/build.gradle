@@ -1,6 +1,23 @@
-apply plugin: 'com.android.library'
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        // 其他 buildscript 依赖项
+    }
+}
+
+// 应用插件
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
+    namespace 'me.shouheng.notepal.fingerprint' // 添加这一行指定命名空间
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -17,6 +34,16 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = '17'
+            freeCompilerArgs = ["-Xjvm-default=all"]
+        }
     }
 }
 
