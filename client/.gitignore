@@ -12,6 +12,8 @@
 bin/
 gen/
 out/
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
 .idea
 
 # Local configuration file (sdk path, etc)
@@ -54,3 +56,25 @@ freeline_project_description.json
 
 # the gradle properties
 ./gradle.properties
+
+# Gradle and build files
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# Cache files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# macOS files
+.DS_Store
+
+# Android Studio specific files
+*.iws
+*.ipr
+*.ids
+*.orig
