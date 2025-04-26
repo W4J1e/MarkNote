@@ -2,10 +2,10 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://dl.bintray.com/msaps/maven" }        // 微软相关库
-        maven { url "https://maven.aliyun.com/repository/public" } // 阿里云镜像
-        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
-        maven { url 'https://jitpack.io' }        
+        maven { url 'https://dl.bintray.com/msaps/maven' } // 微软相关库
+        maven { url 'https://maven.aliyun.com/repository/public' } // 阿里云镜像
+        maven { url 'https://s01.oss.sonatype.org/content/groups/public' }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         // 其他 buildscript 依赖项
@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace 'me.shouheng.notepal.fingerprint' // 添加这一行指定命名空间
+    namespace 'me.shouheng.notepal.fingerprint'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -51,9 +51,6 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(include: ['*.jar'], dir: 'libs')) {
-        exclude 'Samsung_Fingerprint_Pass-v1.2.2.jar'
-    }
     implementation(files('libs/Samsung_Fingerprint_Pass-v1.2.2.jar')) {
         transitive = false
     }
