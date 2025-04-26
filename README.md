@@ -1,19 +1,8 @@
+## NOTE
+
+it's too difficult to rebuild this project especially I did not have enough time and skills to made it. so give up now.
+
 ## TEST VERSION
-
-## 👏👏👏 MY NEW MARKDOWN NOTE APPLICATION
-
-For those who wanna a better user experience while taking markdown note, please try my new product, LeafNote. LeafNote is an advanced note application, connecting phone and computer, designed for cross platform. LeafNote can provide you a better experience. Here are some preview images of LeafNote:
-
-<div style="display:flex;" id="target">
-<img src="resources/images/page_0_en.png" width="11%" />
-<img src="resources/images/page_1_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_2_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_3_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_4_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_5_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_6_en.png" style="margin-left:5px;" width="11%"/>
-<img src="resources/images/page_8_en.png" style="margin-left:5px;" width="11%"/>
-</div>
 
 Anyway if you want to make a markdown App yourself, I think the MarkNote still can provide you with a lot of useful information :)
 
