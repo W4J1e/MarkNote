@@ -417,7 +417,7 @@
     <string name="about_section_developer_desc">設計 &amp; 開發</string>
     <string name="about_section_open_sources">開源協定</string>
     <string name="about_section_open_links">連接</string>
-    <string name="about_section_open_links_details"><![CDATA[
+    <string name="about_section_open_links_details" formatted="false"><![CDATA[
     1.源碼地址：<br/><a href=\"%s\">Shouheng88/MarkNote: An open sourced makrdown note-taking application for Android</a>；<br/><br/>
     2.更新日誌：<a href=\"%s\">查看馬克筆記的更新日誌</a>；<br/><br/>
     3.更新計畫：<a href=\"%s\">及時瞭解我們在接下來的版本中將要開發的功能</a>；<br/><br/>

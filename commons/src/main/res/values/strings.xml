@@ -432,7 +432,7 @@
     <string name="about_section_developer_desc">Design &amp; develop</string>
     <string name="about_section_open_sources">Open source licenses</string>
     <string name="about_section_open_links">Links</string>
-    <string name="about_section_open_links_details"><![CDATA[
+    <string name="about_section_open_links_details" formatted="false"><![CDATA[
 1. SOURCE REPOSITORY:<br/><a href=\"%s\">Shouheng88/MarkNote: An open sourced makrdown note-taking application for Android</a>;<br/><br/>
 2. CHANGE LOGS: <a href=\"%s\">check the release notes about Mark Note</a>;<br/><br/>
 3. UPDATE PLANS: <a href=\"%s\">features we are about to add in the next versions</a>;<br/><br/>
