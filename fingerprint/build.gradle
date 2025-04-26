@@ -51,10 +51,10 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs') {
-        exclude module: 'Samsung_Fingerprint_Pass-v1.2.2'
+    implementation(fileTree(include: ['*.jar'], dir: 'libs')) {
+        exclude 'Samsung_Fingerprint_Pass-v1.2.2.jar'
     }
-    implementation files('libs/Samsung_Fingerprint_Pass-v1.2.2.jar') {
+    implementation(files('libs/Samsung_Fingerprint_Pass-v1.2.2.jar')) {
         transitive = false
     }
     implementation "androidx.appcompat:appcompat:1.6.1"
