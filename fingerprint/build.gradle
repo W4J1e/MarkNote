@@ -51,8 +51,13 @@ android {
 }
 
 dependencies {
-    implementation(files('libs/Samsung_Fingerprint_Pass-v1.2.2.jar')) {
-        transitive = false
+    implementation(fileTree(include: ['*.jar'], dir: 'libs')) {
+        exclude name: 'Samsung_Fingerprint_Pass-v1.2.2'
+    }
+    implementation(name: 'Samsung_Fingerprint_Pass-v1.2.2', ext: 'jar') {
+        flatDir {
+            dirs 'libs'
+        }
     }
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
